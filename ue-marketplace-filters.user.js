@@ -8,30 +8,31 @@
 // @updateURL    https://github.com/Drakmyth/ue-marketplace-filters/raw/master/ue-marketplace-filters.user.js
 // @downloadURL  https://github.com/Drakmyth/ue-marketplace-filters/raw/master/ue-marketplace-filters.user.js
 // @supportURL   https://github.com/Drakmyth/ue-marketplace-filters/issues
+// @license      MIT
 // @match        https://www.unrealengine.com/marketplace/*
 // @run-at       document-body
 // @grant        none
 // ==/UserScript==
 
 (function() {
-    'use strict';
+    `use strict`;
 
     var hideOwned = false;
     var hideExternal = false;
 
     function doControlsExist() {
         var sortContainer = getSortContainer();
-        return sortContainer.querySelector("span.filter-controls");
+        return sortContainer.querySelector(`span.filter-controls`);
     }
 
     function addControls() {
-        var controlsElement = document.createElement("span");
-        controlsElement.className = "filter-controls";
+        var controlsElement = document.createElement(`span`);
+        controlsElement.className = `filter-controls`;
 
-        var hideOwnedCheckbox = createCheckbox("Hide Owned", hideOwned, toggleHideOwned);
+        var hideOwnedCheckbox = createCheckbox(`Hide Owned`, hideOwned, toggleHideOwned);
         controlsElement.appendChild(hideOwnedCheckbox);
 
-        var hideExternalCheckbox = createCheckbox("Hide External", hideExternal, toggleHideExternal);
+        var hideExternalCheckbox = createCheckbox(`Hide External`, hideExternal, toggleHideExternal);
         controlsElement.appendChild(hideExternalCheckbox);
 
         var sortContainer = getSortContainer();
@@ -39,19 +40,19 @@
     }
 
     function getSortContainer() {
-        return document.getElementsByClassName('sort-select')[0];
+        return document.getElementsByClassName(`sort-select`)[0];
     }
 
     function createCheckbox(text, initial, onChange) {
-        var labelElement = document.createElement("label");
-        labelElement.style.marginLeft = "5px";
-        labelElement.style.marginRight = "5px";
+        var labelElement = document.createElement(`label`);
+        labelElement.style.marginLeft = `5px`;
+        labelElement.style.marginRight = `5px`;
 
-        var checkboxElement = document.createElement("input");
-        checkboxElement.type = "checkbox";
+        var checkboxElement = document.createElement(`input`);
+        checkboxElement.type = `checkbox`;
         checkboxElement.checked = initial;
-        checkboxElement.style.marginRight = "3px";
-        checkboxElement.addEventListener("change", onChange);
+        checkboxElement.style.marginRight = `3px`;
+        checkboxElement.addEventListener(`change`, onChange);
         labelElement.appendChild(checkboxElement);
 
         var textElement = document.createTextNode(text);
@@ -71,11 +72,11 @@
     }
 
     function isContainerOwned(container) {
-        return container.querySelector("article.asset--owned");
+        return container.querySelector(`article.asset--owned`);
     }
 
     function isContainerExternal(container) {
-        return !container.querySelector("span.btn");
+        return !container.querySelector(`span.btn`);
     }
 
     function onBodyChange(mut) {
@@ -84,13 +85,13 @@
             addControls();
         }
 
-        var assetContainers = document.getElementsByClassName('asset-container');
+        var assetContainers = document.getElementsByClassName(`asset-container`);
 
         for (let container of assetContainers) {
             var isOwned = isContainerOwned(container);
             var isExternal = isContainerExternal(container);
             if ((hideOwned && isOwned) || (hideExternal && isExternal)) {
-                container.style.display = 'none';
+                container.style.display = `none`;
             } else {
                 container.style.display = null;
             }
